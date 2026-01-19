@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Hodges - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Header */
+        header {
+            padding: 40px 0;
+            background-color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        nav a {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: #1a1a1a;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #1a1a1a;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #666;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            background-color: #ffffff;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .hero .subtitle {
+            font-size: 48px;
+            font-weight: 600;
+            color: #999999;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Work Section */
+        .work-section {
+            padding: 100px 0;
+            background-color: #ffffff;
+        }
+
+        .section-title {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: #1a1a1a;
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .work-item {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .work-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .work-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .work-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .work-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .work-item:hover::before {
+            opacity: 1;
+        }
+
+        .work-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 18px;
+            font-weight: 600;
+            position: relative;
+        }
+
+        /* Individual placeholder colors */
+        .placeholder-1 {
+            background: linear-gradient(135deg, #E8E4F3 0%, #D4CCE8 100%);
+        }
+
+        .placeholder-2 {
+            background: linear-gradient(135deg, #FFE5E5 0%, #FFD1D1 100%);
+        }
+
+        .placeholder-3 {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+        }
+
+        .placeholder-4 {
+            background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+            color: #ffffff;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #e8e8e8;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: #1a1a1a;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: #666;
+            transform: translateY(-2px);
+        }
+
+        .footer-copyright {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: #666;
+            margin-top: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            nav ul {
+                gap: 20px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero .subtitle {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 48px;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .footer-title {
+                font-size: 40px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">joho</a>
+                <nav>
+                    <ul>
+                        <li><a href="#work">Work</a></li>
+                        <li><a href="#fun">Fun</a></li>
+                        <li><a href="#resume">Resume</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>John Hodges</h1>
+            <p class="subtitle">Product + 3D +<br>Motion Designer</p>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section class="work-section" id="work">
+        <div class="container">
+            <h2 class="section-title">My work</h2>
+            <div class="work-grid">
+                <a href="moonlight-creamery.html" class="work-item">
+                    <div class="work-placeholder placeholder-1">
+                        <span>01 - Moonlight Creamery</span>
+                    </div>
+                </a>
+                <a href="figure-design.html" class="work-item">
+                    <div class="work-placeholder placeholder-2">
+                        <span>02 - Figure Design</span>
+                    </div>
+                </a>
+                <a href="imagine-rit.html" class="work-item">
+                    <div class="work-placeholder placeholder-3">
+                        <span>03 - Imagine RIT Poster</span>
+                    </div>
+                </a>
+                <a href="motion-reel.html" class="work-item">
+                    <div class="work-placeholder placeholder-4">
+                        <span>04 - Motion Reel</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h2 class="footer-title">Footer</h2>
+            <div class="footer-links">
+                <a href="mailto:john@example.com">Email</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                <a href="https://dribbble.com" target="_blank">Dribbble</a>
+                <a href="https://twitter.com" target="_blank">Twitter</a>
+            </div>
+            <p class="footer-copyright">© 2025 John Hodges. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add scroll effect to header
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Smooth reveal animation on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const workItems = document.querySelectorAll('.work-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            workItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(item);
+            });
+        });
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '#1a1a1a';
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.style.color = '#666';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
