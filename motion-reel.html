@@ -137,23 +137,27 @@
             color: var(--black);
         }
 
-        /* Coming Soon Placeholder */
-        .coming-soon-container {
+        /* Video Container */
+        .video-container {
             width: 100%;
-            aspect-ratio: 16/9;
-            background: var(--lighter-gray);
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         .coming-soon-text {
             font-family: 'Inter', sans-serif;
-            font-size: 24px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 600;
             color: var(--gray);
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
+            text-align: center;
         }
 
         /* Page Transition */
@@ -217,9 +221,13 @@
                 
                 <h1 class="project-title">Motion Reel</h1>
 
-                <div class="coming-soon-container">
-                    <span class="coming-soon-text">COMING SOON</span>
+                <div class="video-container">
+                    <video autoplay loop muted playsinline poster="Media/ps2.png">
+                        <source src="Media/ps2.mp4" type="video/mp4">
+                    </video>
                 </div>
+                
+                <p class="coming-soon-text">COMING SOON</p>
             </div>
         </section>
     </div>
