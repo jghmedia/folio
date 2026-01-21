@@ -6,7 +6,7 @@
     <title>Figure Design - John Hodges</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,10 +14,20 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #4a4a6a;
+            --text: #374151;
+            --text-light: #6b7280;
+            --bg: #fafafa;
+            --card-bg: #ffffff;
+            --radius: 20px;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f5f5f5;
-            color: #1a1a1a;
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
         }
 
@@ -29,259 +39,454 @@
 
         /* Header */
         header {
-            padding: 40px 0;
-            background-color: #ffffff;
-            position: sticky;
+            padding: 20px 40px;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(250, 250, 250, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 18px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--primary);
             text-decoration: none;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
+            letter-spacing: -0.5px;
         }
 
         nav ul {
             display: flex;
-            gap: 40px;
+            gap: 36px;
             list-style: none;
         }
 
         nav a {
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
-            color: #1a1a1a;
+            color: var(--secondary);
             text-decoration: none;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #1a1a1a;
-            transition: width 0.3s ease;
+            transition: color 0.2s ease;
         }
 
         nav a:hover {
-            color: #666;
+            color: var(--primary);
         }
 
-        nav a:hover::after {
-            width: 100%;
+        /* Project Hero */
+        .project-hero {
+            padding: 140px 0 80px;
         }
 
-        /* Project Header */
-        .project-header {
-            padding: 80px 0 60px;
-            background-color: #ffffff;
-        }
-
-        .project-header h1 {
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #1a1a1a;
-        }
-
-        /* Project Content */
-        .project-content {
-            padding: 40px 0 100px;
-            background-color: #ffffff;
-        }
-
-        .hero-image {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto 60px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .hero-image-placeholder {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: linear-gradient(135deg, #FFE5E5 0%, #FFD1D1 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .project-images {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 750px;
-            margin: 0 auto;
-        }
-
-        .project-image {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .project-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .image-placeholder {
-            width: 100%;
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, #FFE5E5 0%, #FFD1D1 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        /* Back Button */
-        .back-button {
+        .back-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            color: #1a1a1a;
-            text-decoration: none;
-            margin-bottom: 40px;
-            transition: transform 0.3s ease;
+            margin-bottom: 48px;
+            transition: color 0.2s ease;
         }
 
-        .back-button:hover {
-            transform: translateX(-5px);
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .project-title {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+            color: var(--primary);
+        }
+
+        .project-description {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--text-light);
+            max-width: 600px;
+            margin-bottom: 48px;
+        }
+
+        /* Hero Image */
+        .hero-image {
+            margin-bottom: 48px;
+        }
+
+        .hero-image-container {
+            width: 100%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Metadata Row */
+        .metadata-row {
+            display: flex;
+            gap: 64px;
+            padding: 32px 0;
+            margin-bottom: 64px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-light);
+        }
+
+        .meta-value {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        /* Project Sections */
+        .project-section {
+            padding: 64px 0;
+        }
+
+        .section-label {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 32px;
+            color: var(--primary);
+        }
+
+        .section-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        /* Process Layout - Image pairs with text below spanning full width */
+        .process-block {
+            margin-bottom: 64px;
+        }
+
+        .image-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .process-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            aspect-ratio: 1;
+        }
+
+        .process-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .process-text {
+            padding: 8px 0 0 0;
+        }
+
+        /* More Projects */
+        .more-projects {
+            padding: 80px 0;
+            background-color: var(--card-bg);
+            margin-top: 64px;
+        }
+
+        .more-projects h3 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            color: var(--text-light);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .project-card {
+            text-decoration: none;
+            border-radius: var(--radius);
+            background-color: var(--bg);
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-card-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .project-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            padding: 20px 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .placeholder-1 {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        }
+
+        .placeholder-3 {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            .project-header h1 {
-                font-size: 36px;
-            }
-
-            .hero-image {
-                margin-bottom: 40px;
-            }
-
-            .project-images {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
+        @media (max-width: 1024px) {
+            .container { padding: 0 32px; }
+            header { padding: 20px 32px; }
         }
 
-        html {
-            scroll-behavior: smooth;
+        @media (max-width: 768px) {
+            .container { padding: 0 24px; }
+            header { padding: 16px 24px; }
+            nav ul { gap: 20px; }
+            .project-hero { padding: 120px 0 60px; }
+            .project-title { font-size: 36px; letter-spacing: -1px; }
+            .metadata-row { flex-wrap: wrap; gap: 32px; }
+            .image-pair { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+
+        html { scroll-behavior: smooth; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="index.html" class="logo">joho</a>
-                <nav>
-                    <ul>
-                        <li><a href="index.html#work">Work</a></li>
-                        <li><a href="#fun">Fun</a></li>
-                        <li><a href="#resume">Resume</a></li>
-                    </ul>
-                </nav>
-            </div>
+        <div class="header-content">
+            <a href="index.html" class="logo">John Hodges</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html#work">Work</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <!-- Project Header -->
-    <section class="project-header">
+    <section class="project-hero">
         <div class="container">
-            <a href="index.html#work" class="back-button">← Back to Work</a>
-            <h1>Minun and Plusle<br>figure design</h1>
-        </div>
-    </section>
+            <a href="index.html#work" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to all work
+            </a>
+            
+            <h1 class="project-title">Minun & Plusle<br>Figure Design</h1>
+            <p class="project-description">Minun and Plusle are a beloved Pokémon duo often seen as symbols of friendship and teamwork. This project aimed to create collectible figures that capture their unique charm while maintaining high-quality craftsmanship.</p>
 
-    <!-- Project Content -->
-    <section class="project-content">
-        <div class="container">
-            <div class="hero-image">
-                <div class="hero-image-placeholder">Hero Image - Figure Packaging</div>
+            <!-- Hero Image -->
+            <div class="hero-image reveal">
+                <div class="hero-image-container">
+                    <img src="Media/MinunPlusle_H.png" alt="Minun and Plusle Figure Design Hero">
+                </div>
             </div>
 
-            <div class="project-images">
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_1.png" alt="Sketch 1">
+            <!-- Metadata: Role, Time, Tools -->
+            <div class="metadata-row">
+                <div class="meta-item">
+                    <span class="meta-label">Role</span>
+                    <span class="meta-value">Lead Designer</span>
                 </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_2.png" alt="Sketch 2">
+                <div class="meta-item">
+                    <span class="meta-label">Timeline</span>
+                    <span class="meta-value">6 Weeks</span>
                 </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_3.png" alt="3D Model 1">
-                </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_4.png" alt="3D Model 2">
-                </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_5.png" alt="3D Model 3">
-                </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_6.png" alt="Detail View">
-                </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_7.png" alt="Final Render 1">
-                </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_8.png" alt="Color Variants">
-                </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_9.png" alt="Photography 1">
-                </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_10.png" alt="Final Render 2">
-                </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_11.png" alt="Packaging 1">
-                </div>
-                <div class="project-image">
-                    <img src="Media/MinunPlusle_12.png" alt="Packaging 2">
+                <div class="meta-item">
+                    <span class="meta-label">Tools</span>
+                    <span class="meta-value">Cinema 4D, Photoshop</span>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- The Process Section -->
+    <section class="project-section">
+        <div class="container">
+            <h2 class="section-label">The Process</h2>
+
+            <!-- Block 1: Images 1 & 2 -->
+            <div class="process-block reveal">
+                <div class="image-pair">
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_1.png" alt="Initial concept exploration">
+                    </div>
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_2.png" alt="Character proportion studies">
+                    </div>
+                </div>
+                <div class="process-text">
+                    <p class="section-text">First, I made reference sketches to aid in the 3D modeling process.</p>
+                </div>
+            </div>
+
+            <!-- Block 2: Images 3 & 4 -->
+            <div class="process-block reveal">
+                <div class="image-pair">
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_3.png" alt="Base mesh development">
+                    </div>
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_4.png" alt="Detail pass">
+                    </div>
+                </div>
+                <div class="process-text">
+                    <p class="section-text">Then I created low-poly models of all of the parts I planned to connect together. I then used subdivision surfaces to smoothen out my models.</p>
+                </div>
+            </div>
+
+            <!-- Block 3: Images 5 & 6 -->
+            <div class="process-block reveal">
+                <div class="image-pair">
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_5.png" alt="Final model with materials">
+                    </div>
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_6.png" alt="Surface detail close-up">
+                    </div>
+                </div>
+                <div class="process-text">
+                    <p class="section-text">After modeling and connecting the entire body, which has many of the same components for each character, I duplicated my model and created and connected all the parts that differed between each models (like this tail seen here, belonging to Minun).</p>
+                </div>
+            </div>
+
+            <!-- Block 4: Images 7 & 8 -->
+            <div class="process-block reveal">
+                <div class="image-pair">
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_7.png" alt="Hero render pair">
+                    </div>
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_8.png" alt="Final colored figures">
+                    </div>
+                </div>
+                <div class="process-text">
+                    <p class="section-text">Making each character only one color and transparent made the entire figure easy and cheap to print while still having a polished look.</p>
+                </div>
+            </div>
+
+            <!-- Block 5: Images 9 & 10 -->
+            <div class="process-block reveal">
+                <div class="image-pair">
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_9.png" alt="Physical prototype">
+                    </div>
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_10.png" alt="Production render">
+                    </div>
+                </div>
+                <div class="process-text">
+                    <p class="section-text">Utilizing a product photography studio, I shot and edited product pictures for the product's box art</p>
+                </div>
+            </div>
+
+            <!-- Block 6: Images 11 & 12 -->
+            <div class="process-block reveal">
+                <div class="image-pair">
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_11.png" alt="Display box design">
+                    </div>
+                    <div class="process-image">
+                        <img src="Media/MinunPlusle_12.png" alt="Collector's edition packaging">
+                    </div>
+                </div>
+                <div class="process-text">
+                    <p class="section-text">Here's the packaging design!</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="more-projects">
+        <div class="container">
+            <h3>More Projects</h3>
+            <div class="projects-grid">
+                <a href="moonlight-creamery.html" class="project-card">
+                    <div class="project-card-image placeholder-1">Moonlight Creamery</div>
+                    <h4>Moonlight Creamery</h4>
+                </a>
+                <a href="imagine-rit.html" class="project-card">
+                    <div class="project-card-image placeholder-3">Imagine RIT Poster</div>
+                    <h4>Imagine RIT Poster</h4>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
