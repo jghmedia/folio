@@ -103,30 +103,30 @@
         }
 
         .hero h1 {
-            font-size: 72px;
+            font-size: 96px;
             font-weight: 800;
             line-height: 1;
-            letter-spacing: -3px;
-            margin-bottom: 16px;
+            letter-spacing: -4px;
+            margin-bottom: 20px;
             color: var(--primary);
         }
 
         .subtitle-main {
-            font-size: 18px;
+            font-size: 24px;
             font-weight: 500;
             color: var(--secondary);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .subtitle-extras {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
 
         .subtitle-line {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 400;
             color: var(--text-light);
             opacity: 0;
@@ -283,6 +283,16 @@
             align-items: flex-end;
             justify-content: flex-start;
             position: relative;
+            overflow: hidden;
+        }
+
+        .work-placeholder img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .work-item-title {
@@ -299,6 +309,7 @@
             opacity: 0;
             transform: translateY(8px);
             transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1;
         }
 
         .placeholder-1 {
@@ -325,23 +336,39 @@
 
         .about-content {
             display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 64px;
-            align-items: center;
+            grid-template-columns: 1fr 200px;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .about-text-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .about-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
         }
 
         .about-text {
-            font-size: 20px;
-            line-height: 1.8;
+            font-size: 16px;
+            line-height: 1.7;
             color: var(--text);
-            max-width: 600px;
+            max-width: 500px;
         }
 
         .about-image {
-            width: 100%;
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
             border-radius: var(--radius);
+            flex-shrink: 0;
         }
 
         /* Footer CTA */
@@ -416,8 +443,20 @@
         @media (max-width: 1024px) {
             .container { padding: 0 32px; }
             header { padding: 20px 32px; }
-            .hero h1 { font-size: 56px; }
-            .about-content { grid-template-columns: 1fr; gap: 40px; }
+            .hero h1 { font-size: 72px; letter-spacing: -3px; }
+            .subtitle-main { font-size: 20px; }
+            .subtitle-line { font-size: 16px; }
+            .about-content { 
+                grid-template-columns: 1fr 160px; 
+                gap: 32px; 
+            }
+            .about-image {
+                width: 160px;
+                height: 160px;
+            }
+            .about-text-container {
+                min-height: 160px;
+            }
             .footer-cta h2 { font-size: 44px; }
         }
 
@@ -427,11 +466,31 @@
             nav ul { gap: 20px; }
             nav a { font-size: 13px; }
             .hero { padding: 100px 0 60px; }
-            .hero h1 { font-size: 42px; letter-spacing: -1.5px; }
-            .hero .subtitle { font-size: 16px; }
+            .hero h1 { font-size: 52px; letter-spacing: -2px; }
+            .subtitle-main { font-size: 16px; }
+            .subtitle-line { font-size: 14px; }
             .section-title { font-size: 28px; }
             .work-grid { grid-template-columns: 1fr; gap: 24px; }
             .work-item-title { opacity: 1; transform: translateY(0); }
+            .about-content { 
+                grid-template-columns: 1fr 120px; 
+                gap: 24px;
+                align-items: center;
+            }
+            .about-image {
+                width: 120px;
+                height: 120px;
+            }
+            .about-text-container {
+                min-height: auto;
+            }
+            .about-title {
+                font-size: 22px;
+                margin-bottom: 8px;
+            }
+            .about-text {
+                font-size: 14px;
+            }
             .footer-cta { padding: 80px 0; }
             .footer-cta h2 { font-size: 32px; letter-spacing: -1px; }
             .cta-buttons { flex-direction: column; align-items: center; }
@@ -507,16 +566,19 @@
             <div class="work-grid">
                 <a href="moonlight-creamery.html" class="work-item reveal">
                     <div class="work-placeholder placeholder-1">
+                        <img src="Media/Moonlight_H.png" alt="Moonlight Creamery">
                         <h3 class="work-item-title">Moonlight Creamery</h3>
                     </div>
                 </a>
                 <a href="figure-design.html" class="work-item reveal">
                     <div class="work-placeholder placeholder-2">
+                        <img src="Media/MinunPlusle_10.png" alt="Figure Design">
                         <h3 class="work-item-title">Figure Design</h3>
                     </div>
                 </a>
                 <a href="imagine-rit.html" class="work-item reveal">
                     <div class="work-placeholder placeholder-3">
+                        <img src="Media/ImagineRIT_4.png" alt="Imagine RIT Poster">
                         <h3 class="work-item-title">Imagine RIT Poster</h3>
                     </div>
                 </a>
@@ -531,11 +593,11 @@
 
     <section class="about-section" id="about">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">But more about me!</h2>
-            </div>
             <div class="about-content">
-                <p class="about-text">Coming from a video and photo background, I have been pursuing design for the past two years and enjoy finding different mediums to both design and express my creativity!</p>
+                <div class="about-text-container">
+                    <h2 class="about-title">But more about me!</h2>
+                    <p class="about-text">Coming from a video and photo background, I have been pursuing design for the past two years and enjoy finding different mediums to both design and express my creativity!</p>
+                </div>
                 <div class="about-image"></div>
             </div>
         </div>
