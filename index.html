@@ -242,8 +242,8 @@
         .work-item {
             text-decoration: none;
             display: block;
-            opacity: 0;
-            transform: translateY(60px);
+            opacity: 1;
+            transform: translateY(0);
             transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -533,7 +533,7 @@
 
     <header>
         <div class="header-content">
-            <a href="index.html" class="logo">John Hodges©</a>
+            <a href="index.html" class="logo">John Hodges</a>
             <nav>
                 <ul>
                     <li><a href="#work">Work</a></li>
@@ -583,12 +583,21 @@
             </div>
 
             <div class="work-grid">
+                <a href="motion-reel.html" class="work-item" data-transition>
+                    <div class="work-image-container">
+                        <img src="Media/ps2.png" alt="Motion Reel">
+                    </div>
+                    <div class="work-info">
+                        <h3>Motion Reel</h3>
+                    </div>
+                </a>
+
                 <a href="moonlight-creamery.html" class="work-item" data-transition>
                     <div class="work-image-container">
                         <img src="Media/Moonlight_H.png" alt="Moonlight Creamery">
                     </div>
                     <div class="work-info">
-                        <h3>Moonlight Creamery</h3>
+                        <h3>Moonlight Creamery Brand Redesign</h3>
                         <p>Brand identity for an artisanal ice cream shop</p>
                     </div>
                 </a>
@@ -605,21 +614,11 @@
 
                 <a href="imagine-rit.html" class="work-item" data-transition>
                     <div class="work-image-container">
-                        <img src="Media/ImagineRIT_4.png" alt="Imagine RIT Poster">
+                        <img src="Media/thmb.png" alt="Imagine RIT Poster">
                     </div>
                     <div class="work-info">
                         <h3>Imagine RIT Poster</h3>
                         <p>Event poster celebrating creativity and innovation</p>
-                    </div>
-                </a>
-
-                <a href="motion-reel.html" class="work-item" data-transition>
-                    <div class="work-image-container">
-                        <img src="Media/ps2.png" alt="Motion Reel">
-                    </div>
-                    <div class="work-info">
-                        <h3>Motion Reel</h3>
-                        <p>Coming soon</p>
                     </div>
                 </a>
             </div>
@@ -645,7 +644,6 @@
             <h2>Get in touch</h2>
             <div class="cta-buttons">
                 <a href="https://www.linkedin.com/in/jg-hodges-creative" target="_blank" class="cta-btn primary">LinkedIn</a>
-                <a href="mailto:john@example.com" class="cta-btn primary">Resume</a>
             </div>
         </div>
     </section>
@@ -657,34 +655,43 @@
     </footer>
 
     <script>
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe work items
+            document.querySelectorAll('.work-item').forEach((el, index) => {
+                el.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(el);
             });
-        }, observerOptions);
 
-        // Observe work items
-        document.querySelectorAll('.work-item').forEach((el, index) => {
-            el.style.transitionDelay = `${index * 0.1}s`;
-            observer.observe(el);
-        });
+            // Observe about section
+            document.querySelectorAll('.about-text-wrapper, .about-image').forEach(el => {
+                observer.observe(el);
+            });
 
-        // Observe about section
-        document.querySelectorAll('.about-text-wrapper, .about-image').forEach(el => {
-            observer.observe(el);
-        });
+            // Observe footer
+            document.querySelectorAll('.footer-cta h2, .cta-buttons').forEach(el => {
+                observer.observe(el);
+            });
 
-        // Observe footer
-        document.querySelectorAll('.footer-cta h2, .cta-buttons').forEach(el => {
-            observer.observe(el);
+            // Fallback: make items visible after a short delay if observer hasn't fired
+            setTimeout(() => {
+                document.querySelectorAll('.work-item, .about-text-wrapper, .about-image, .footer-cta h2, .cta-buttons').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 100);
         });
 
         // Page transitions
@@ -771,10 +778,4 @@
             if (currentIndex > 0 && currentIndex < projects.length) {
                 pageTransition.classList.add('active');
                 setTimeout(() => {
-                    window.location.href = projects[currentIndex].url;
-                }, 600);
-            }
-        });
-    </script>
-</body>
-</html>
+     
