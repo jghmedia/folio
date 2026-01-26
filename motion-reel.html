@@ -212,7 +212,7 @@
     <div class="page-content">
         <section class="project-hero">
             <div class="container">
-                <a href="index.html#work" class="back-link">
+                <a href="index.html#work" class="back-link" data-transition>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M19 12H5M12 19l-7-7 7-7"/>
                     </svg>
@@ -231,5 +231,17 @@
             </div>
         </section>
     </div>
+
+    <script>
+        const pageTransition = document.getElementById('pageTransition');
+        document.querySelectorAll('[data-transition]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                pageTransition.classList.add('active');
+                setTimeout(() => { window.location.href = href; }, 600);
+            });
+        });
+    </script>
 </body>
 </html>
