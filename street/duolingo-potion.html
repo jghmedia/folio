@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duolingo Potion Animation - John Hodges</title>
+    <meta name="description" content="A 48-hour motion design test: giving Duolingo's XP-refill potion personality, from button press to a seamless bubble loop.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --black: #1a1a1a;
+            --gray: #666666;
+            --light-gray: #999999;
+            --lighter-gray: #e5e5e5;
+            --white: #ffffff;
+            --bg: #fafafa;
+            /* the project's own accent: the potion purple */
+            --potion: #8a4fff;
+            --potion-soft: #f1eaff;
+            --potion-deep: #5a22d6;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg);
+            color: var(--black);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 48px; }
+
+        /* Header */
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 24px 48px; background: var(--bg); }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 14px;  color: var(--black); text-decoration: none; font-family: 'Unbounded', system-ui, sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+        nav ul { display: flex; gap: 32px; list-style: none; }
+        nav a { font-size: 14px; color: var(--gray); text-decoration: none; transition: color 0.3s ease; }
+        nav a:hover { color: var(--black); }
+
+        /* Page entry */
+        .page-content { opacity: 0; transform: translateY(60px); animation: pageSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
+        @keyframes pageSlideUp { to { opacity: 1; transform: translateY(0); } }
+
+        /* Hero */
+        .project-hero { padding: 140px 0 60px; }
+        .back-link { font-size: 14px; color: var(--gray); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 48px; transition: color 0.3s ease; }
+        .back-link:hover { color: var(--black); }
+        .back-link svg { width: 16px; height: 16px; }
+        .project-title { font-family: 'Unbounded', system-ui, sans-serif; font-size: clamp(31.2px, 4.7vw, 43.7px); font-weight: 800; line-height: 1.1; margin-bottom: 16px; letter-spacing: -0.035em; }
+        .project-description { font-size: 16px; line-height: 1.7; color: var(--gray); max-width: 600px; margin-bottom: 40px; }
+
+        /* Hero stage: the final animation in a phone, on a soft potion panel */
+        .hero-stage {
+            position: relative; margin-bottom: 40px; border-radius: 12px; overflow: hidden;
+            background: var(--potion-soft); padding: 56px 24px; display: grid; place-items: center;
+        }
+        .hero-stage .bub { position: absolute; border-radius: 50%; background: #fff; opacity: .7; animation: rise 9s linear infinite; }
+        @keyframes rise { from { transform: translateY(120px) scale(.6); opacity: 0 } 15% { opacity: .7 } to { transform: translateY(-520px) scale(1.1); opacity: 0 } }
+        .phone { position: relative; width: min(300px, 70vw); aspect-ratio: 750 / 1624; border-radius: 38px; background: #14102a; padding: 9px; box-shadow: 0 30px 60px -30px rgba(90, 34, 214, .45); }
+        .phone video, .phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 30px; display: block; background: #fff; }
+        .phone.sm { width: 200px; border-radius: 28px; padding: 7px; }
+        .phone.sm video, .phone.sm img { border-radius: 22px; }
+        .sound-btn {
+            position: absolute; right: 18px; bottom: 18px; font: 500 13px 'Instrument Sans', sans-serif; color: var(--potion-deep);
+            background: #fff; border: 1px solid #ddd0ff; border-radius: 999px; padding: 8px 14px; cursor: pointer;
+        }
+        .sound-btn:hover { border-color: var(--potion); }
+
+        /* Metadata */
+        .metadata-row { display: flex; gap: 48px; padding: 24px 0; border-top: 1px solid var(--lighter-gray); border-bottom: 1px solid var(--lighter-gray); margin-bottom: 80px; flex-wrap: wrap; }
+        .meta-item { display: flex; flex-direction: column; gap: 4px; }
+        .meta-label { font-size: 12px;  text-transform: uppercase; letter-spacing: 0.1em; color: var(--light-gray); font-family: 'DM Mono', ui-monospace, monospace; font-weight: 500; }
+        .meta-value { font-size: 14px; color: var(--black); }
+
+        /* Sections */
+        .project-section { margin-bottom: 96px; opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .project-section.visible { opacity: 1; transform: translateY(0); }
+        .step { font-size: 12px;  text-transform: uppercase; letter-spacing: 0.1em; color: var(--potion); margin-bottom: 8px; font-family: 'DM Mono', ui-monospace, monospace; font-weight: 500; }
+        .section-label { font-family: 'Unbounded', system-ui, sans-serif; font-size: 21.8px; font-weight: 800; letter-spacing: -0.035em; margin-bottom: 20px; }
+        .section-text { font-size: 16px; line-height: 1.8; color: var(--gray); margin-bottom: 16px; max-width: 620px; }
+        .section-text strong { color: var(--black); font-weight: 500; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+        .split { display: grid; grid-template-columns: 1fr 240px; gap: 48px; align-items: start; }
+        figure { margin: 0; min-width: 0; }
+        .two-col > *, .split > *, .flow > *, .sketches > *, .strip > * { min-width: 0; }
+        .flow .frame img { width: 100%; }
+        figcaption { font-size: 13px; color: var(--light-gray); margin-top: 10px; line-height: 1.5; }
+        .frame { border-radius: 12px; overflow: hidden; background: #fff; border: 1px solid var(--lighter-gray); }
+        .frame img, .frame video { width: 100%; height: auto; display: block; }
+
+        /* Brief: the three reference frames as a flow */
+        .flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 16px; margin-top: 32px; }
+        .flow figure { text-align: center; }
+        .flow .frame { max-width: 190px; margin: 0 auto; border-radius: 16px; }
+        .flow .arrow { color: var(--light-gray); font-size: 22px; }
+        .brief-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px; margin: 8px 0 0; max-width: 760px; }
+        .brief-list li { font-size: 15px; color: var(--gray); padding-left: 18px; position: relative; line-height: 1.6; }
+        .brief-list li::before { content: ''; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--potion); }
+
+        /* Notes: research findings */
+        .notes { display: grid; gap: 20px; }
+        .note { border-left: 2px solid var(--potion-soft); padding-left: 18px; }
+        .note h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .note p { font-size: 15px; color: var(--gray); line-height: 1.7; }
+        .note.good { border-color: #7bd389; }
+        .note.miss { border-color: #ffb3b3; }
+
+        /* Sketches */
+        .sketches { display: grid; grid-template-columns: 1.3fr .75fr 1fr; gap: 20px; align-items: end; margin-top: 28px; }
+        .sketches .frame { background: #fff; }
+
+        /* Code */
+        .code { font: 500 14px/1.7 'DM Mono', ui-monospace, monospace; background: #17132b; color: #e8e2ff; border-radius: 12px; padding: 18px 20px; overflow-x: auto; margin: 8px 0 18px; }
+        .code .c { color: #8f86b8; } .code .f { color: #ffcf6b; } .code .k { color: #b39bff; }
+
+        /* Personality strip */
+        .strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
+        .strip figure .frame { border-radius: 14px; }
+        .strip figcaption { color: var(--gray); }
+        .strip figcaption b { display: block; color: var(--black); font-weight: 500; font-size: 13px; }
+
+        /* Takeaways */
+        .takeaways { list-style: none; counter-reset: t; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 40px; }
+        .takeaways li { counter-increment: t; font-size: 15px; color: var(--gray); line-height: 1.7; padding-top: 14px; border-top: 1px solid var(--lighter-gray); }
+        .takeaways li::before { content: counter(t, decimal-leading-zero); display: block; font-size: 12px; font-weight: 500; letter-spacing: .1em; color: var(--potion); margin-bottom: 4px; }
+
+        /* More projects */
+        .more-projects { padding: 80px 0; border-top: 1px solid var(--lighter-gray); }
+        .more-projects h3 { font-size: 12px;  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 32px; color: var(--light-gray); font-family: 'DM Mono', ui-monospace, monospace; font-weight: 500; }
+        .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+        .project-card { text-decoration: none; display: block; }
+        .project-card-image { width: 100%; aspect-ratio: 16/9; background: var(--lighter-gray); border-radius: 12px; margin-bottom: 16px; overflow: hidden; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .project-card-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .project-card:hover .project-card-image { transform: scale(1.02); }
+        .project-card h4 { font-family: 'Unbounded', system-ui, sans-serif; font-size: 14px; font-weight: 700; color: var(--black); letter-spacing: -0.015em; }
+
+        .page-transition { position: fixed; inset: 0; background: var(--black); z-index: 9999; transform: translateY(100%); visibility: hidden; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.6s; }
+        .page-transition.active { visibility: visible; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .page-transition.active { transform: translateY(0); }
+
+        @media (max-width: 1024px) {
+            .container { padding: 0 32px; }
+            header { padding: 24px 32px; }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 24px; }
+            header { padding: 20px 24px; }
+            nav ul { gap: 20px; }
+            .project-hero { padding: 120px 0 40px; }
+            .project-title { font-size: 34px; }
+            .metadata-row { gap: 24px; }
+            .two-col, .split { grid-template-columns: 1fr; gap: 28px; }
+            .brief-list, .takeaways { grid-template-columns: 1fr; }
+            .flow { grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+            .flow .arrow { display: none; }
+            .sketches { grid-template-columns: 1fr 1fr; }
+            .sketches figure:first-child { grid-column: 1 / -1; }
+            .strip { grid-template-columns: 1fr 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .split .phone.sm { margin: 0 auto; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .page-content, .project-section { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-transition" id="pageTransition"></div>
+
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">John Hodges©</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html#list">Work</a></li>
+                    <li><a href="index.html#contact">About</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-content">
+        <section class="project-hero">
+            <div class="container">
+                <a href="index.html#list" class="back-link" data-transition>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to all work
+                </a>
+
+                <h1 class="project-title">Duolingo Potion Animation</h1>
+                <p class="project-description">A 48-hour motion design test. I was handed three reference frames and a starter After Effects file, and asked to make the XP-refill potion feel alive: from the button press, through the refill, to a bubble loop that can run forever, and back to the home screen.</p>
+
+                <div class="hero-stage">
+                    <span class="bub" style="left:12%;width:26px;height:26px;animation-delay:-1s"></span>
+                    <span class="bub" style="left:22%;width:14px;height:14px;animation-delay:-5s"></span>
+                    <span class="bub" style="left:78%;width:34px;height:34px;animation-delay:-3s"></span>
+                    <span class="bub" style="left:86%;width:12px;height:12px;animation-delay:-7s"></span>
+                    <span class="bub" style="left:70%;width:18px;height:18px;animation-delay:-8.5s"></span>
+                    <div class="phone">
+                        <video id="hero" src="../Media/duo_potion_full.mp4" poster="../Media/duo_poster_brew.jpg" data-fallback="../Media/duo_potion_anim.webp" muted autoplay loop playsinline aria-label="Final Duolingo potion animation: the user taps refill, the potion fills with purple, bubbles loop, then the app returns home"></video>
+                    </div>
+                    <button class="sound-btn" id="snd" aria-pressed="false">♪ Sound on</button>
+                </div>
+
+                <div class="metadata-row">
+                    <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">Motion Designer</span></div>
+                    <div class="meta-item"><span class="meta-label">Timeline</span><span class="meta-value">48 Hours</span></div>
+                    <div class="meta-item"><span class="meta-label">Tools</span><span class="meta-value">After Effects, Illustrator</span></div>
+                    <div class="meta-item"><span class="meta-label">Format</span><span class="meta-value">iPhone 16 Pro Max · 60 fps</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <div class="container">
+                <p class="step">01 · The brief</p>
+                <h2 class="section-label">Three frames, one bottle, 48 hours</h2>
+                <ul class="brief-list">
+                    <li>Animate between the three given reference frames</li>
+                    <li>Give the potion bottle personality</li>
+                    <li>User taps the button, the potion animates, then back to the Duo home screen</li>
+                    <li>Build a looping state for the bubbles rising out of the bottle</li>
+                    <li>Sized for mobile (iPhone 16 Pro Max)</li>
+                    <li>Starting point: a pre-made After Effects file with some assets</li>
+                </ul>
+                <div class="flow">
+                    <figure><div class="frame"><img src="../Media/duo_ref1.jpg" alt="Reference frame 1: the refill offer with a timer and a Refill button" loading="lazy"></div><figcaption>Frame 1 · the offer</figcaption></figure>
+                    <span class="arrow" aria-hidden="true">→</span>
+                    <figure><div class="frame"><img src="../Media/duo_ref2.jpg" alt="Reference frame 2: the potion is full, Earn triple XP for the next 15 minutes" loading="lazy"></div><figcaption>Frame 2 · refilled</figcaption></figure>
+                    <span class="arrow" aria-hidden="true">→</span>
+                    <figure><div class="frame"><img src="../Media/duo_ref3.jpg" alt="Reference frame 3: the Duolingo home path" loading="lazy"></div><figcaption>Frame 3 · back home</figcaption></figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <div class="container">
+                <p class="step">02 · Research</p>
+                <h2 class="section-label">How does Duolingo already move?</h2>
+                <div class="split">
+                    <div>
+                        <p class="section-text">Before touching keyframes I screen-recorded the app's existing potion screen and other reward moments, so the new animation would feel like it belonged.</p>
+                        <div class="notes">
+                            <div class="note good"><h4>What already worked</h4><p>The background is full of motion, drifting energy bubbles, without pulling focus from the bottle.</p></div>
+                            <div class="note miss"><h4>What was missing</h4><p>The bottle itself barely moves, and the liquid never actually fills up.</p></div>
+                            <div class="note"><h4>Objects have personality</h4><p>Focal objects, like the reward chest, come alive through squash and stretch and carefully shaped speed graphs.</p></div>
+                            <div class="note"><h4>The button is the exception</h4><p>It is the one non-smooth component: a drop shadow gives it depth and shows when it is pressed.</p></div>
+                        </div>
+                    </div>
+                    <figure>
+                        <div class="phone sm"><video src="../Media/duo_research_current.mp4" poster="../Media/duo_research.jpg" data-fallback="../Media/duo_research_anim.webp" muted autoplay loop playsinline aria-label="Screen recording of the app's existing potion animation"></video></div>
+                        <figcaption>The existing potion screen, recorded in the app.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <div class="container">
+                <p class="step">03 · Sketches</p>
+                <h2 class="section-label">Planning the beats on paper</h2>
+                <p class="section-text">I broke the moment into three beats: <strong>tap the button</strong>, <strong>the background takes over</strong>, <strong>the potion fills up</strong>. Notes in the margins planned the details, like the background fading to a light purple, fading back to the screen before the loop starts, and the gem count ticking from 200 down to 100 in quick whole numbers with a counting sound.</p>
+                <div class="sketches">
+                    <figure><div class="frame"><img src="../Media/duo_sketch1.jpg" alt="Sketch: pressing the Refill button" loading="lazy"></div><figcaption>01 · Tap</figcaption></figure>
+                    <figure><div class="frame"><img src="../Media/duo_sketch2.jpg" alt="Sketch: purple background takes over, bottle squashes" loading="lazy"></div><figcaption>02 · Background changes</figcaption></figure>
+                    <figure><div class="frame"><img src="../Media/duo_sketch3.jpg" alt="Sketch: potion fills, fade back, loop the bubbles; gems count down" loading="lazy"></div><figcaption>03 · Potion fills up</figcaption></figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <div class="container">
+                <p class="step">04 · Building it</p>
+                <h2 class="section-label">Rebuilding the background, faster</h2>
+                <div class="two-col">
+                    <div>
+                        <p class="section-text">The purple takeover needed the same drifting "energy bubbles" as the app, so I <strong>redrew the bubble in Illustrator</strong> and brought it into After Effects.</p>
+                        <p class="section-text">Instead of hand-placing every copy, I gave each one a small expression. <code>seedRandom(index, true)</code> gives every duplicate its own random size and position that stays put over time, so the field looks hand-placed while each new bubble is only a duplicate away.</p>
+                        <pre class="code"><span class="c">// Position + Scale, every bubble</span>
+<span class="f">seedRandom</span>(<span class="k">index</span>, <span class="k">true</span>);</pre>
+                    </div>
+                    <div>
+                        <figure><div class="frame"><img src="../Media/duo_illustrator.jpg" alt="The energy bubble redrawn in Illustrator" loading="lazy"></div><figcaption>The energy bubble, redrawn in Illustrator.</figcaption></figure>
+                        <figure style="margin-top:20px"><div class="frame"><img src="../Media/duo_ae_expr.jpg" alt="After Effects timeline showing seedRandom expressions on Position and Scale" loading="lazy"></div><figcaption>The expressions on the bubble layer's Position and Scale.</figcaption></figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <div class="container">
+                <p class="step">05 · The loop</p>
+                <h2 class="section-label">A brew that never ends</h2>
+                <div class="split">
+                    <div>
+                        <p class="section-text">The loop had to be seamless. I <strong>numbered every bubble at the top</strong> of the frame, then gave the bubbles inside the bottle matching numbers. Each one rises out of the potion, changes colour as it leaves the glass, and lands exactly where its twin started, so the last frame hands off to the first with no jump.</p>
+                        <figure style="max-width:360px;margin-top:24px"><div class="frame"><img src="../Media/duo_sketch_loop.jpg" alt="Sketch: numbered bubbles mapping from inside the bottle to above it" loading="lazy"></div><figcaption>Numbering the bubbles so the loop lines up.</figcaption></figure>
+                    </div>
+                    <figure>
+                        <div class="phone sm"><video src="../Media/duo_loop.mp4" poster="../Media/duo_loop_poster.jpg" data-fallback="../Media/duo_loop_anim.webp" muted autoplay loop playsinline aria-label="The looping bubble state"></video></div>
+                        <figcaption>The loop state, playing on repeat.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <div class="container">
+                <p class="step">06 · Personality</p>
+                <h2 class="section-label">Squash, stretch, fill, fizz</h2>
+                <p class="section-text">The bottle anticipates with a squash, stretches up as the purple floods in, wobbles as the liquid settles, and then starts to bubble. Sound sells it: a <strong>potion-loading cue</strong> under the fill and a <strong>fanfare</strong> as the triple-XP message lands.</p>
+                <div class="strip">
+                    <figure><div class="frame"><img src="../Media/duo_still_0_5.jpg" alt="The bottle squashes, waiting on the offer screen" loading="lazy"></div><figcaption><b>Anticipate</b>Squashing while the offer waits.</figcaption></figure>
+                    <figure><div class="frame"><img src="../Media/duo_still_3_4.jpg" alt="The purple background takes over and the bottle squashes flat" loading="lazy"></div><figcaption><b>Take over</b>Purple floods the screen.</figcaption></figure>
+                    <figure><div class="frame"><img src="../Media/duo_still_5_2.jpg" alt="The bottle stretches up, full of purple potion" loading="lazy"></div><figcaption><b>Fill</b>Stretching up as it fills.</figcaption></figure>
+                    <figure><div class="frame"><img src="../Media/duo_still_10_4.jpg" alt="Back on the Duolingo home path" loading="lazy"></div><figcaption><b>Hand back</b>Home, with 100 gems spent.</figcaption></figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <div class="container">
+                <p class="step">07 · Takeaways</p>
+                <h2 class="section-label">What I took away</h2>
+                <ol class="takeaways">
+                    <li>Borrowing what already works in a client's animations, so new motion feels native to the product.</li>
+                    <li>Producing an animated deliverable for a client on a quick turnaround.</li>
+                    <li>Using JavaScript expressions in After Effects to randomize and multiply objects, and to loop a comp.</li>
+                    <li>Using sound to carry a motion piece.</li>
+                    <li>Interpreting personality and giving it to an inanimate object.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="more-projects">
+            <div class="container">
+                <h3>More Projects</h3>
+                <div class="projects-grid">
+                    <a href="motion-reel.html" class="project-card" data-transition>
+                        <div class="project-card-image"><img src="../Media/reel_poster.jpg" alt="" loading="lazy"></div>
+                        <h4>Motion Reel</h4>
+                    </a>
+                    <a href="figure-design.html" class="project-card" data-transition>
+                        <div class="project-card-image"><img src="../Media/MinunPlusle_10.png" alt="" loading="lazy"></div>
+                        <h4>Figure Design</h4>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.project-section').forEach(el => observer.observe(el));
+
+        // Some viewers block or can't decode video, which leaves the poster sitting there as a still.
+        // When that happens, swap in the animated WebP of the same clip so the phone always moves.
+        function toAnim(v) {
+            if (!v.isConnected || v.dataset.swapped) return;
+            v.dataset.swapped = '1';
+            const img = new Image();
+            img.src = v.dataset.fallback; img.alt = v.getAttribute('aria-label') || '';
+            v.replaceWith(img);
+            if (v.id === 'hero') document.getElementById('snd').style.display = 'none';
+        }
+        document.querySelectorAll('video[data-fallback]').forEach(v => {
+            if (v.error) return toAnim(v);
+            v.addEventListener('error', () => toAnim(v));
+            const p = v.play(); if (p && p.catch) p.catch(() => toAnim(v));
+            // no data after a few seconds (blocked source, unsupported codec) → swap
+            setTimeout(() => { if (v.readyState < 2 || v.networkState === 3) toAnim(v); }, 3000);
+        });
+
+        // sound toggle on the hero video (it starts muted so it can autoplay)
+        const hero = document.getElementById('hero'), snd = document.getElementById('snd');
+        snd.addEventListener('click', () => {
+            hero.muted = !hero.muted;
+            if (!hero.muted) { hero.currentTime = 0; hero.play().catch(() => {}); }
+            snd.setAttribute('aria-pressed', String(!hero.muted));
+            snd.textContent = hero.muted ? '♪ Sound on' : '♪ Sound off';
+        });
+
+        const pageTransition = document.getElementById('pageTransition');
+        document.querySelectorAll('[data-transition]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                pageTransition.classList.add('active');
+                setTimeout(() => { window.location.href = href; }, 600);
+            });
+        });
+    </script>
+</body>
+</html>
